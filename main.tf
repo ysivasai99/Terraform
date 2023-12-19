@@ -52,22 +52,60 @@ resource "aws_internet_gateway" "myig" {
         tags = {
                 Name = "myig"
 }
-}
+}   
 # Route Table
-resource "aws_route_table" "web_rt" {
+resource "aws_route_table" "web-rt" {
         vpc_id = aws_vpc.Projectvpc.id
         route {
                 cidr_block = "0.0.0.0/0"
                 gateway_id = aws_internet_gateway.myig.id
 }
         tags = {
-                Name = "web_rt"
+                Name = "web-rt"
 }
 }
 resource "aws_route_table" "app-rt" {
         vpc_id = aws_vpc.Projectvpc.id
         route {
                 cidr_block = "0.0.0.0/0"
+                gateway_id = aws_nat_gateway.mynat.id
+}
+        tags = {
+                Name = "app-rt"
+}
+}
+# Route Table association
+resource "aws_subnet_association" "pub-sub1" {
+        subnet_id = aws_subnet.public-subnet-2a.id
+        route_table_id = aws_route_table.web-rt.id
+}
+resource "aws_subnet_association" "pub-sub2" {
+        subnet_id = aws_subnet.public-subnet-2b.id
+        route_table_id = aws_route_table.web-rt.id
+}
+resource "aws_subnet_association" "prvt-sub-1" {
+        subnet_id = aws_subnet.
+        route_table_id = aws_route_table
+}
+resource "aws_subnet_association" "prvt-sub-2" {
+        subnet_id = aws_subnet.private-subnet-2b.id
+        route_table_id = aws_route_table.app-rt.id
+}
+#Elastic ip
+resource "aws_eip" "eip" {
+        vpc = true
+        tags = {                
+                Name = "eip"
+}
+}
+# Nat Gateway
+resource "aws_nat_gateway" "mynat" {
+        vpc_id = aws_vpc.Projectvpc.id
+        tags = {
+                Name = "mynat"
+}
+}    
+
                 
         
 
