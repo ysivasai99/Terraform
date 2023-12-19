@@ -65,6 +65,9 @@ resource "aws_route_table" "web_rt" {
 }
 }
 resource "aws_route_table" "app-rt" {
-        vpc_id = aws_vpc_
+        vpc_id = aws_vpc.Projectvpc.id
+        route {
+                cidr_block = "0.0.0.0/0"
+                
         
 
