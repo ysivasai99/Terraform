@@ -47,7 +47,7 @@ provider "aws" {
           resource "aws_instance" "myinstance" {
                   ami = "ami-0f599bbc07afc299a"
                   instance_type = "t2.micro"
-                  subnet_id = aws_subnet.publicsubnet.id
+                  subnet_id = aws_subnet.public_subnet.id
                   tags = {
                             Name = "terraformdup"
                             }
